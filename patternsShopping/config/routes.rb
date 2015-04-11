@@ -1,4 +1,6 @@
 PatternsShopping::Application.routes.draw do
+  resources :app_configs
+
   resources :notifiers
 
    get "sessions/new"
