@@ -11,18 +11,10 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :customer_id %><br />
-    <%= f.number_field :customer_id %>
-  </div>
-  <div class="field">
+ <div class="field">
     <%= f.label :paymethod %><br />
-    <%= f.text_field :paymethod %>
-  </div>
-  <div class="field">
-    <%= f.label :total %><br />
-    <%= f.text_field :total %>
-  </div>
+    <%= f.select :paymethod , ["Debit Card", "Credit Card", "Paypal"] %>	
+  </div> 
   <div class="actions">
     <%= f.submit %>
   </div>

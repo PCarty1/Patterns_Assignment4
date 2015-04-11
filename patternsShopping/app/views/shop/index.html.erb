@@ -1,2 +1,16 @@
-<h1>Shop#index</h1>
-<p>Find me in app/views/shop/index.html.erb</p>
+<% if notice %>
+	<p id="notice"><%= notice %></p>
+<% end %>
+<h1>Products for Sale</h1>
+<% if !@products.empty? %>
+	<% @products.each do |stock_product| %>	
+		<%= image_tag(stock_product.image, :size => "50x50") %>
+		<h3><%= stock_product.title %></h3>
+		<%= sanitize(stock_product.description) %>
+		<%= number_to_euro(stock_product.price) %>
+		<%= button_to 'Add to Cart', lineitems_path(product_id: stock_product), remote: true %>	
+	<% end %>
+<% else %>
+	<p>There are no products for sale</p>
+<% end %>
+

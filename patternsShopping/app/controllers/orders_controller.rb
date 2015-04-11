@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+before_filter :authorise, :only =>[:new, :create]
+
   # GET /orders
   # GET /orders.json
   def index
@@ -24,6 +26,14 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.json
   def new
+  
+  @cart = current_cart
+	if @cart.lineitems.empty?
+		redirect_to home_path, notice: "Your cart is empty"
+		return
+	end
+
+	
     @order = Order.new
 
     respond_to do |format|
@@ -41,14 +51,21 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(params[:order])
+	@order.add_lineitems_from_cart(current_cart)	
+	@order.customer_id = @current_customer.id	
 
+	
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render json: @order, status: :created, location: @order }
+				Cart.destroy(session[:cart_id])
+				session[:cart_id] = nil
+					format.html { redirect_to root_path, notice: 'Thank you for your order' }
+					format.json { render json: @order, status: :created, location: @order }
       else
-        format.html { render action: "new" }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+		
+		@cart = current_cart
+			format.html { render action: "new" }
+			format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,7 +78,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update_attributes(params[:order])
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { head :no_content }
+        format.json { head :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @order.errors, status: :unprocessable_entity }
@@ -77,7 +94,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to orders_url }
-      format.json { head :no_content }
+      format.json { head :ok }
     end
   end
 end

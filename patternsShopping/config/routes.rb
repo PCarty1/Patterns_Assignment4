@@ -1,15 +1,20 @@
 PatternsShopping::Application.routes.draw do
-  resources :lineitems
+   get "sessions/new"
 
   resources :carts
 
   resources :orders
 
+  resources :lineitems
+
   resources :stock_products
-
+  resources :sessions
   resources :customers
-
+	  
+  root :to => 'shop#index'
   get "shop/index"
+   match '/signin',  :to => 'sessions#new'
+   match '/signout', :to => 'sessions#destroy'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
