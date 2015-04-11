@@ -1,4 +1,6 @@
 PatternsShopping::Application.routes.draw do
+  resources :notifiers
+
    get "sessions/new"
 
   resources :carts

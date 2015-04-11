@@ -1,4 +1,21 @@
+require 'observer'
 class StockProductsController < ApplicationController
+ attr_reader :price, :quantity
+ 
+  include Observable
+ 
+ def initialize(price = 0, quantity = 3000)
+    @price, @quantity = price, quantity
+    add_observer(Notifier.new)
+  end
+  
+   def log(prices)
+    @price += prices
+  changed
+  notify_observers(self, prices)
+
+  end
+  
   # GET /stock_products
   # GET /stock_products.json
   def index
