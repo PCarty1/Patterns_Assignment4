@@ -1,4 +1,14 @@
 PatternsShopping::Application.routes.draw do
+  resources :lineitems
+
+  resources :carts
+
+  resources :orders
+
+  resources :stock_products
+
+  resources :customers
+
   get "shop/index"
 
   # The priority is based upon order of creation:
