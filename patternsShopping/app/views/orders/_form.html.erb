@@ -13,7 +13,18 @@
 
  <div class="field">
     <%= f.label :paymethod %><br />
-    <%= f.select :paymethod , ["Debit Card", "Credit Card", "Paypal"] %>	
+    <%= f.select :paymethod , [
+	if is_paymethod
+my_paymethod = :paymethod
+my_paymethod = "Debit Card"
+
+else if is_paymethod
+my_paymethod = :paymethod
+my_paymethod = "Credit Card"
+else
+
+my_paymethod = :paymethod
+my_paymethod = "Paypal" end] %>	
   </div> 
   <div class="actions">
     <%= f.submit %>
