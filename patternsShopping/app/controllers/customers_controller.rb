@@ -1,4 +1,15 @@
 class CustomersController < ApplicationController
+ 
+ def join  
+   p 'I want to sign up'  
+  end   
+  def accessDetails  
+   p 'I want to access my details'  
+  end   
+  def leave  
+   p 'I want to sign out'  
+  end  
+
   # GET /customers
   # GET /customers.json
   def index

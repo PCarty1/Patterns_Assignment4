@@ -1,4 +1,6 @@
 PatternsShopping::Application.routes.draw do
+  resources :shop_directors
+
   resources :app_configs
 
   resources :notifiers
